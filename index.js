@@ -7,6 +7,7 @@ const { initializeDBConnection } = require("./db/db.connect")
 const posts = require("./routes/post.router");
 const signup = require("./routes/signup.router");
 const login = require("./routes/login.router");
+const { authVerify } = require("./middlewares/authVerify")
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -17,9 +18,10 @@ app.get('/', (req, res) => {
   res.send('Hello Express app!')
 });
 
-app.use("/posts", posts);
 app.use("/signup", signup);
 app.use("/login", login);
+app.use(authVerify);
+app.use("/posts", posts);
 
 app.listen(3000, () => {
   console.log('server started');

@@ -1,9 +1,8 @@
 const express = require("express");
 const postRouter = express.Router();
+const { fetchPosts } = require("../controllers/post.controller")
 
 postRouter.route("/")
-  .get((req, res) => {
-    res.json({ message: "posts", success: true })
-  })
+  .get(fetchPosts)
 
 module.exports = postRouter;
