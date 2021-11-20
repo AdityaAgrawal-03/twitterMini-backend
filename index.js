@@ -5,7 +5,8 @@ const express = require('express');
 const app = express();
 const { initializeDBConnection } = require("./db/db.connect")
 const posts = require("./routes/post.router");
-const signup = require("./routes/signup.router")
+const signup = require("./routes/signup.router");
+const login = require("./routes/login.router");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 
 app.use("/posts", posts);
 app.use("/signup", signup);
+app.use("/login", login);
 
 app.listen(3000, () => {
   console.log('server started');
