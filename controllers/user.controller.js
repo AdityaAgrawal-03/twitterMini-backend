@@ -10,23 +10,34 @@ const getAllUsers = async (req, res) => {
   }
 }
 
-// list of followers
-const getFollowers = async (req, res) => {
+const getUser = async (req, res) => {
   try {
     const { username } = req.params;
-    
-    const user = await User.findOne({ username: username }).populate("followers");
-    
+    const user = await User.findOne({ username: username })
 
-    const userFollowers = user.followers.map(({ _id, name, username }) => {
-      return { _id: _id, name: name, username: username }
-    })    
-
-     res.json({ success: true, userId: user._id, userFollowers })
+    res.json({ success: true, user })
   } catch (error) {
+    res.json({ success: false, errorMessage: error.message })
+  }
+};
+
+const getFollowing = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const user = await User.findOne({ username: username }).populate("following");
+
+    const userFollowing = user.following.map(({ _id, name, username }) => {
+      return { _id: _id, name: name, username: username }
+    })
+
+    res.json({ success: true, userId: user._id, userFollowing })
+  } catch (error) {
+   
     res.json({ success: false, errorMessage: error.message, error: "Error" })
   }
 }
+
 
 const updateFollowingAndFollowers = async (req, res) => {
   try {
@@ -34,6 +45,8 @@ const updateFollowingAndFollowers = async (req, res) => {
 
     const sourceUser = await User.findOne({ username: username });
     const targetUser = await User.findById(target_userId);
+
+    console.log({ sourceUser, targetUser })
     
     const isInFollowing = sourceUser.following.find(userId => userId.toString() === target_userId);
 
@@ -54,4 +67,4 @@ const updateFollowingAndFollowers = async (req, res) => {
   }
 }
 
-module.exports = { getAllUsers, updateFollowingAndFollowers, getFollowers }
+module.exports = { getAllUsers, updateFollowingAndFollowers, getFollowing, getUser }
