@@ -11,5 +11,24 @@ const fetchPosts = async (req, res) => {
   }
 }
 
-module.exports = { fetchPosts }
+const addPost = async (req, res) => {
+  try {
+      const { userId } = req.user;
+      const user = await User.findById(userId);
+      const { content } = req.body;
+
+      const newPost = new Post({
+        user,
+        content
+      })
+
+      await newPost.save();
+
+      res.json({ success: true, post: newPost })
+  } catch (error) {
+    res.json({ success: false, errorMessage: error.message })
+  }
+}
+
+module.exports = { fetchPosts, addPost }
 

@@ -9,7 +9,7 @@ const PostSchema = new Schema({
   content: {
     type: String,
     required: "Cannot add post without content",
-   
+    maxLength: 140
   },
   likes: [{
     type: Schema.Types.ObjectId,

@@ -1,12 +1,3 @@
 {
-  "files": {
-    "models/post.model.js": [
-      {
-        "id": "a4b181dd-3807-4b9d-913e-cc504ddbde20",
-        "line": 17,
-        "version": 160,
-        "index": 316
-      }
-    ]
-  }
+  "files": {}
 }
