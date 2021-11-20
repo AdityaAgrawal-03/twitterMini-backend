@@ -8,7 +8,8 @@ const PostSchema = new Schema({
   },
   content: {
     type: String,
-    required: "Cannot add post without content" 
+    required: "Cannot add post without content",
+   
   },
   likes: [{
     type: Schema.Types.ObjectId,
