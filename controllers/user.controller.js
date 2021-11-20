@@ -10,6 +10,24 @@ const getAllUsers = async (req, res) => {
   }
 }
 
+// list of followers
+const getFollowers = async (req, res) => {
+  try {
+    const { username } = req.params;
+    
+    const user = await User.findOne({ username: username }).populate("followers");
+    
+
+    const userFollowers = user.followers.map(({ _id, name, username }) => {
+      return { _id: _id, name: name, username: username }
+    })    
+
+     res.json({ success: true, userId: user._id, userFollowers })
+  } catch (error) {
+    res.json({ success: false, errorMessage: error.message, error: "Error" })
+  }
+}
+
 const updateFollowingAndFollowers = async (req, res) => {
   try {
     const { username, target_userId } = req.params;
@@ -36,4 +54,4 @@ const updateFollowingAndFollowers = async (req, res) => {
   }
 }
 
-module.exports = { getAllUsers, updateFollowingAndFollowers }
+module.exports = { getAllUsers, updateFollowingAndFollowers, getFollowers }
